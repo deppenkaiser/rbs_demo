@@ -12,10 +12,7 @@
 bool app_handle_wet(sm_state_t next_state, void* user_data)
 {
 	rbs_sm_t fsm = (rbs_sm_t) user_data;
-
 	rbs_set_fact_named(fsm->rbs, rbs_invert_token(RAIN));
-	rbs_set_fact_named(fsm->rbs, rbs_invert_token(CLOUDY));
-
 	return rbs_sm_advance(fsm, next_state);
 }
 
@@ -38,9 +35,8 @@ void app_on_step(rbs_sm_t fsm, uint32_t tick)
 	int pos = snprintf(buf, sizeof(buf), "step %u | UMBRELLA:", (unsigned) tick);
 	pos += snprintf(buf + pos, sizeof(buf) - pos, " %s | MONEY:",
 	                rbs_is_fact(rbs->facts, rbs->token_count, UMBRELLA) ? "true" : "false");
-	snprintf(buf + pos, sizeof(buf) - pos, " %.0f", rbs->memory[MONEY]);
+	snprintf(buf + pos, sizeof(buf) - pos, " %.0f\n-----------------------", rbs->memory[MONEY]);
 	logging_log_message(buf);
-	logging_log_message("----------------------------");
 }
 
 /* Konstruktor (sm-Lebenszyklus-Callback): laeuft ganz am Anfang des
@@ -75,10 +71,6 @@ callback void sm_on_start(sm_core_t core)
 callback void sm_on_stop(sm_core_t core)
 {
 	rbs_sm_t fsm = (rbs_sm_t) core->user_data;
-
-	logging_log_message(rbs_is_fact(fsm->rbs->facts, fsm->rbs->token_count, UMBRELLA) ?
-	                    "app: UMBRELLA ist gesetzt (fsm beendet)" :
-	                    "app: UMBRELLA NICHT gesetzt");
 
 	/* Speicherverwaltung: die im Konstruktor/main angelegten Buffer wieder
 	 * freigeben (setzt fsm->rbs->facts bzw. ->memory auf NULL). */
