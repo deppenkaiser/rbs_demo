@@ -49,3 +49,7 @@ rbs main end
 ## Abhängigkeiten
 
 - `rbs` – `libraries/rbs` (Regel-Engine; zieht `sm`, `logging`, `api`, `m` transitiv)
+
+## Wiki
+
+Dokumentation: [rbs_demo – Beispiel-App für das rbs-Regelsystem](https://czybor.i234.me/wiki/sw-module/rbs_demo/) (Quartz-Wiki)
