@@ -14,8 +14,8 @@ bool app_handle_wet(sm_state_t next_state, void* user_data)
 	rbs_sm_t fsm = (rbs_sm_t) user_data;
 
 	logging_log_message("wetter: regen klaert auf");
-	rbs_set_fact(fsm->rbs->facts, fsm->rbs->token_count, rbs_invert_token(RAIN));
-	rbs_set_fact(fsm->rbs->facts, fsm->rbs->token_count, rbs_invert_token(CLOUDY));
+	rbs_set_fact_named(fsm->rbs, rbs_invert_token(RAIN));
+	rbs_set_fact_named(fsm->rbs, rbs_invert_token(CLOUDY));
 
 	return rbs_sm_advance(fsm, next_state);
 }
@@ -63,10 +63,10 @@ callback void sm_on_start(sm_core_t core)
 	rbs->memory[AGE] = 20;
 	rbs->memory[MONEY] = 100;
 
-	/* Initiale Welt: es regnet und ist bewoelkt. */
-	logging_log_message("app: fsm startet (wetter: es regnet und ist bewoelkt)");
-	rbs_set_fact(rbs->facts, rbs->token_count, RAIN);
-	rbs_set_fact(rbs->facts, rbs->token_count, CLOUDY);
+	/* Initiale Welt: es regnet und ist bewoelkt. Jedes Setzen wird von
+	 * rbs_set_fact_named (mit Namen + Vorzeichen) geloggt. */
+	rbs_set_fact_named(rbs, RAIN);
+	rbs_set_fact_named(rbs, CLOUDY);
 }
 
 /* Destruktor (sm-Lebenszyklus-Callback): laeuft ganz am Ende des
