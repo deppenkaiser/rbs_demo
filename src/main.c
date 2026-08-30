@@ -26,7 +26,6 @@ int main()
 		.effect_count = sizeof(app_effects) / sizeof(app_effects[0]),
 		.slots = app_slots,
 		.slot_count = sizeof(app_slots) / sizeof(app_slots[0]),
-		.on_step = app_on_step,
 	};
 
 	rbs_sm_run(&fsm);

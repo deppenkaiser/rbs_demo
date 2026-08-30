@@ -26,9 +26,10 @@ bool app_handle_adult(sm_state_t next_state, void* user_data)
 	return false;
 }
 
-/* Schritt-Callback: liefert je Schritt eine Zeile (Step-Grenze/Status)
- * gefolgt von einer Trennlinie. */
-void app_on_step(rbs_sm_t fsm, uint32_t tick)
+/* Schritt-Callback (api-Muster): ueberschreibt den weak-Default von rbs und
+ * liefert je Schritt eine Zeile (Step-Grenze/Status) gefolgt von einer
+ * Trennlinie. */
+callback void rbs_on_step(rbs_sm_t fsm, uint32_t tick)
 {
 	rbs_t rbs = fsm->rbs;
 	char buf[128];
