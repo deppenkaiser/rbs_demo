@@ -13,7 +13,6 @@ bool app_handle_wet(sm_state_t next_state, void* user_data)
 {
 	rbs_sm_t fsm = (rbs_sm_t) user_data;
 
-	logging_log_message("wetter: regen klaert auf");
 	rbs_set_fact_named(fsm->rbs, rbs_invert_token(RAIN));
 	rbs_set_fact_named(fsm->rbs, rbs_invert_token(CLOUDY));
 
@@ -30,17 +29,18 @@ bool app_handle_adult(sm_state_t next_state, void* user_data)
 	return false;
 }
 
-/* Schritt-Callback: liefert je Schritt eine Zeile (Step-Grenze/Status). */
+/* Schritt-Callback: liefert je Schritt eine Zeile (Step-Grenze/Status)
+ * gefolgt von einer Trennlinie. */
 void app_on_step(rbs_sm_t fsm, uint32_t tick)
 {
 	rbs_t rbs = fsm->rbs;
 	char buf[128];
-	(void) tick;
 	int pos = snprintf(buf, sizeof(buf), "step %u | UMBRELLA:", (unsigned) tick);
 	pos += snprintf(buf + pos, sizeof(buf) - pos, " %s | MONEY:",
 	                rbs_is_fact(rbs->facts, rbs->token_count, UMBRELLA) ? "true" : "false");
 	snprintf(buf + pos, sizeof(buf) - pos, " %.0f", rbs->memory[MONEY]);
 	logging_log_message(buf);
+	logging_log_message("----------------------------");
 }
 
 /* Konstruktor (sm-Lebenszyklus-Callback): laeuft ganz am Anfang des
