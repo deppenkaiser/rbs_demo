@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../libraries/rbs"
+		}
+	],
+	"settings": {
+		"clangd.arguments": [
+			"--compile-commands-dir=build"
+		]
+	}
+}
