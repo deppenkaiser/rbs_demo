@@ -13,7 +13,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_executable(rbs_demo)
-add_subdirectory(../../libraries/rbs ${CMAKE_BINARY_DIR}/rbs)
+add_subdirectory(../../libraries/rbs ${CMAKE_BINARY_DIR}/libs_build/rbs)
 
 target_sources(rbs_demo PRIVATE
 	src/main.c
